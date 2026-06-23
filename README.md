@@ -1,19 +1,14 @@
-# GDB Store — Hub de entrada
+# GDB Store — Protótipo visual final
 
-Página inicial simples para escolha da instituição antes de acessar o marketplace específico.
+Arquitetura:
 
-## Jornada
+1. Porta de entrada GDB Store.
+2. Escolha da instituição: Dom Bosco Exponencial, UNDB ou Pós-Graduação UNDB.
+3. Cada instituição abre uma loja/e-commerce própria, com identidade, categorias, produtos, favoritos, carrinho, login, eventos e últimas experiências.
 
-1. Usuário acessa a GDB Store.
-2. Escolhe uma instituição:
-   - Dom Bosco Exponencial
-   - UNDB
-   - Pós-Graduação UNDB
-3. É direcionado para o marketplace/e-commerce específico da instituição.
+Arquivos para GitHub Pages:
 
-## Arquivos
+- index.html
+- README.md
 
-- `index.html`
-- `README.md`
-
-Todo o CSS está embutido no `index.html`.
+Tudo está embutido no index.html.
