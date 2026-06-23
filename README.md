@@ -1,13 +1,16 @@
-# GDB Store — Protótipo novo
+# GDB Store — Portal de Marketplaces
 
-Porta de entrada do marketplace do Grupo Dom Bosco, com três e-commerces separados:
+Protótipo visual da jornada correta:
 
-- Dom Bosco Exponencial
-- UNDB
-- Pós-Graduação UNDB
+1. Porta de entrada: **GDB Store**
+2. Escolha da instituição:
+   - Dom Bosco Exponencial
+   - UNDB
+   - Pós-Graduação UNDB
+3. Cada instituição abre seu próprio marketplace/e-commerce com identidade, categorias e produtos.
 
-Arquivos do projeto:
-- `index.html`: site completo com HTML, CSS e JS embutidos.
-- `README.md`: descrição do projeto.
+Arquivos necessários para GitHub Pages:
+- `index.html`
+- `README.md`
 
-Para publicar no GitHub Pages, suba somente estes dois arquivos.
+Não precisa de pasta assets, app.js ou style.css. Está tudo embutido no index.html.
