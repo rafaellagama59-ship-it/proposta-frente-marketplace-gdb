@@ -1,95 +1,262 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>GDB Store — Portal de Marketplaces</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GDB Store | Escolha sua instituição</title>
   <style>
     :root{
-      --ink:#14081f;--muted:#6d6475;--line:#eee5f3;--bg:#fff9fd;--card:#ffffff;
-      --pink:#e00070;--magenta:#c51b8d;--purple:#54248a;--yellow:#ffe52f;--red:#ad161d;--wine:#6f1224;--blue:#173a75;
-      --shadow:0 24px 70px rgba(44,16,58,.14);--radius:28px;
+      --ink:#11051f;
+      --muted:#6f667a;
+      --pink:#ec0b78;
+      --magenta:#c90078;
+      --purple:#5b238f;
+      --db-purple:#7d54b3;
+      --db-pink:#d63193;
+      --post-red:#9d1225;
+      --post-blue:#2f5d96;
+      --card:#ffffff;
+      --line:#eee8f3;
+      --shadow:0 24px 70px rgba(28,10,52,.14);
+      --radius:34px;
     }
-    *{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;font-family:Inter,Arial,Helvetica,sans-serif;color:var(--ink);background:linear-gradient(180deg,#fff7fc 0%,#fff 35%,#fff9fd 100%)}
-    a{color:inherit;text-decoration:none} button,input{font:inherit} .wrap{max-width:1220px;margin:auto;padding:0 22px}.hidden{display:none!important}
-    .topbar{position:sticky;top:0;z-index:50;background:rgba(255,250,254,.88);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
-    .nav{height:88px;display:flex;align-items:center;gap:22px}.brand{font-weight:950;font-size:25px;line-height:.88}.brand span{display:block;color:var(--pink)}
-    .search{flex:1;min-width:220px;display:flex;align-items:center;gap:10px;background:white;border:1px solid #eadcf0;border-radius:22px;padding:15px 18px;box-shadow:0 10px 30px rgba(84,36,138,.06)}
-    .search input{border:0;outline:0;width:100%;font-size:16px;background:transparent;color:var(--ink)}
-    .links{display:flex;gap:18px;font-weight:850}.links a{padding:10px 0}.actions{display:flex;gap:10px}.pillbtn{border:0;background:white;border-radius:16px;padding:14px 18px;font-weight:900;box-shadow:0 12px 32px rgba(84,36,138,.08);cursor:pointer}.badge{display:inline-grid;place-items:center;min-width:22px;height:22px;border-radius:99px;background:var(--pink);color:white;font-size:12px;margin-left:5px}
-    .hero{padding:56px 0 34px}.kicker{letter-spacing:.18em;text-transform:uppercase;color:var(--pink);font-weight:950;font-size:13px}.heroGrid{display:grid;grid-template-columns:1.05fr .95fr;gap:28px;align-items:stretch}.heroCard{border-radius:36px;padding:46px;background:linear-gradient(135deg,#1a0827 0%,#7923a0 48%,#e00070 100%);color:white;position:relative;overflow:hidden;box-shadow:var(--shadow)}
-    .heroCard:after{content:"";position:absolute;right:-90px;top:-90px;width:340px;height:340px;border-radius:50%;background:rgba(255,255,255,.13)}.hero h1{font-size:54px;line-height:.96;margin:16px 0 18px;letter-spacing:-2px}.hero p{font-size:20px;line-height:1.45;max-width:680px;margin:0 0 26px;color:#fff0fb}.cta{display:inline-flex;align-items:center;gap:10px;border:0;border-radius:18px;padding:16px 22px;font-weight:950;cursor:pointer;background:white;color:#1a0827}.cta.alt{background:var(--yellow);color:#3e174d}.sideInfo{display:grid;gap:18px}.mini{background:white;border:1px solid var(--line);border-radius:30px;padding:28px;box-shadow:0 18px 55px rgba(84,36,138,.08)}.mini h3{margin:0 0 10px;font-size:24px}.mini p{margin:0;color:var(--muted);line-height:1.5}.section{padding:38px 0}.titleRow{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:20px}.titleRow h2{font-size:38px;letter-spacing:-1.2px;margin:0}.titleRow p{margin:8px 0 0;color:var(--muted);font-size:17px}
-    .gateway{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}.gate{min-height:330px;border-radius:34px;padding:32px;color:white;position:relative;overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column;justify-content:space-between}.gate:after{content:"";position:absolute;right:-55px;bottom:-75px;width:245px;height:245px;border-radius:50%;background:rgba(255,255,255,.17)}.gate h3{font-size:34px;line-height:1;margin:0 0 12px}.gate p{font-size:17px;line-height:1.45;color:rgba(255,255,255,.9)}.gate .tag{font-weight:950;letter-spacing:.13em;text-transform:uppercase;font-size:12px}.gate.db{background:linear-gradient(135deg,#704ba3,#d62b8e)}.gate.undb{background:linear-gradient(135deg,#3a1176,#f0007b)}.gate.pos{background:linear-gradient(135deg,#7e1523,#183b76)}
-    .market{padding:26px 0 60px}.marketHero{border-radius:36px;padding:38px;color:white;overflow:hidden;position:relative;box-shadow:var(--shadow);display:grid;grid-template-columns:1fr 360px;gap:24px;align-items:center}.marketHero h1{font-size:46px;line-height:1;margin:10px 0 12px}.marketHero p{font-size:18px;line-height:1.45;color:rgba(255,255,255,.92);margin:0 0 22px}.mhArt{height:250px;border-radius:28px;background:rgba(255,255,255,.18);display:grid;place-items:center;text-align:center;font-weight:950;font-size:38px}.dbTheme{background:linear-gradient(135deg,#5c3a8e,#d52b91)}.undbTheme{background:linear-gradient(135deg,#3d137a,#e6007e)}.posTheme{background:linear-gradient(135deg,#b01825,#183b76)}
-    .tabs,.chips{display:flex;gap:10px;flex-wrap:wrap;margin:24px 0}.chip,.tab{border:1px solid #eadcf0;background:white;border-radius:999px;padding:12px 17px;font-weight:900;cursor:pointer}.tab.active,.chip.active{background:var(--ink);color:white;border-color:var(--ink)}
-    .carousel{display:grid;grid-template-columns:1.4fr .8fr;gap:18px;margin:22px 0}.slide{min-height:290px;border-radius:30px;padding:34px;color:white;display:flex;flex-direction:column;justify-content:end;background-size:cover;background-position:center;position:relative;overflow:hidden}.slide:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,8,31,.05),rgba(20,8,31,.72))}.slide>*{position:relative}.slide h2{font-size:38px;margin:0 0 8px}.slide p{max-width:580px;margin:0 0 18px}.slideSmall{display:grid;gap:18px}.smallCard{border-radius:26px;padding:24px;background:white;border:1px solid var(--line)}.smallCard b{font-size:20px}.smallCard p{color:var(--muted);margin:8px 0 0;line-height:1.4}
-    .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}.product{background:white;border:1px solid var(--line);border-radius:26px;overflow:hidden;box-shadow:0 16px 44px rgba(44,16,58,.08)}.photo{height:170px;background:linear-gradient(135deg,#f0007b,#54248a);display:grid;place-items:center;color:white;font-weight:950;text-align:center;padding:18px;font-size:22px}.photo.dbp{background:linear-gradient(135deg,#7e54b5,#df2b91)}.photo.undbp{background:linear-gradient(135deg,#3b1276,#f0007b)}.photo.posp{background:linear-gradient(135deg,#b01624,#173a75)}.productBody{padding:18px}.label{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--pink);font-weight:950}.product h3{font-size:21px;margin:8px 0}.meta{color:var(--muted);font-size:14px;line-height:1.55}.price{font-size:22px;font-weight:950;margin:14px 0}.row{display:flex;gap:8px;align-items:center}.outline{border:1px solid #eadcf0;background:white;border-radius:14px;padding:11px 13px;font-weight:900;cursor:pointer}.buy{border:0;background:var(--pink);color:white;border-radius:14px;padding:12px 14px;font-weight:950;cursor:pointer;flex:1}.events{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.event{background:white;border:1px solid var(--line);border-radius:26px;padding:22px}.date{display:inline-block;background:#fff0f7;color:var(--pink);border-radius:13px;padding:8px 12px;font-weight:950;margin-bottom:12px}.gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.memory{height:190px;border-radius:24px;background:linear-gradient(135deg,#efe0f5,#ffd4e8);display:flex;align-items:end;padding:18px;font-weight:950;color:#fff;position:relative;overflow:hidden}.memory:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,8,31,.05),rgba(20,8,31,.68))}.memory span{position:relative}.footer{padding:40px 0;border-top:1px solid var(--line);color:var(--muted)}
-    .modal{position:fixed;inset:0;background:rgba(20,8,31,.55);display:none;align-items:center;justify-content:center;z-index:80;padding:20px}.modal.open{display:flex}.box{width:min(560px,100%);background:white;border-radius:30px;padding:28px;box-shadow:var(--shadow)}.box h2{margin:0 0 12px}.box p{color:var(--muted);line-height:1.5}.close{float:right;border:0;background:#f4edf7;border-radius:12px;padding:8px 12px;cursor:pointer;font-weight:900}.cartItem{display:flex;justify-content:space-between;border-bottom:1px solid var(--line);padding:12px 0}
-    @media(max-width:940px){.nav{height:auto;flex-wrap:wrap;padding:16px 0}.links{order:3;width:100%;overflow:auto}.heroGrid,.marketHero,.carousel{grid-template-columns:1fr}.gateway,.grid,.events,.gallery{grid-template-columns:1fr 1fr}.hero h1{font-size:40px}.mhArt{height:160px}.actions{margin-left:auto}}@media(max-width:620px){.gateway,.grid,.events,.gallery{grid-template-columns:1fr}.search{order:2;width:100%;flex:unset}.heroCard{padding:30px}.hero h1,.marketHero h1{font-size:34px}.titleRow h2{font-size:30px}.links{font-size:14px}.pillbtn{padding:12px}}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      min-height:100vh;
+      font-family:Inter, Arial, Helvetica, sans-serif;
+      color:var(--ink);
+      background:
+        radial-gradient(circle at 15% 0%, rgba(236,11,120,.13), transparent 34%),
+        radial-gradient(circle at 85% 6%, rgba(91,35,143,.14), transparent 38%),
+        linear-gradient(180deg,#fff 0%,#fff8fc 48%,#f7f1fb 100%);
+    }
+    .wrap{max-width:1220px;margin:0 auto;padding:42px 28px 56px}
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+      margin-bottom:56px;
+    }
+    .brand{
+      font-size:30px;
+      line-height:1;
+      font-weight:900;
+      letter-spacing:-1px;
+    }
+    .brand span{display:block;color:var(--pink)}
+    .badge{
+      padding:12px 18px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      background:rgba(255,255,255,.68);
+      color:var(--muted);
+      font-weight:750;
+      box-shadow:0 12px 40px rgba(28,10,52,.08);
+    }
+    .hero{margin-bottom:28px}
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:9px 14px;
+      border-radius:999px;
+      color:#8d0e5b;
+      background:#fff;
+      border:1px solid #f3d4e5;
+      font-size:13px;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      margin-bottom:20px;
+    }
+    h1{
+      max-width:850px;
+      font-size:clamp(38px,6vw,74px);
+      line-height:.94;
+      letter-spacing:-3px;
+      margin-bottom:20px;
+    }
+    .sub{
+      max-width:720px;
+      font-size:21px;
+      line-height:1.45;
+      color:var(--muted);
+      margin-bottom:38px;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:26px;
+    }
+    .card{
+      position:relative;
+      overflow:hidden;
+      min-height:420px;
+      padding:34px;
+      border-radius:var(--radius);
+      color:#fff;
+      box-shadow:var(--shadow);
+      isolation:isolate;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      transition:transform .25s ease, box-shadow .25s ease;
+    }
+    .card:hover{transform:translateY(-6px);box-shadow:0 32px 90px rgba(28,10,52,.22)}
+    .card:before{
+      content:"";
+      position:absolute;
+      width:260px;height:260px;
+      right:-70px;bottom:-80px;
+      border-radius:50%;
+      background:rgba(255,255,255,.18);
+      z-index:-1;
+    }
+    .card:after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(135deg,rgba(255,255,255,.14),transparent 44%);
+      z-index:-2;
+    }
+    .dom{background:linear-gradient(135deg,var(--db-purple),var(--db-pink))}
+    .undb{background:linear-gradient(135deg,#4a137d 0%,var(--magenta) 55%,#f02b8d 100%)}
+    .pos{background:linear-gradient(135deg,var(--post-red),#4b2345 55%,var(--post-blue))}
+    .label{
+      font-size:14px;
+      text-transform:uppercase;
+      letter-spacing:.13em;
+      font-weight:950;
+      opacity:.92;
+      margin-bottom:10px;
+    }
+    h2{
+      font-size:clamp(30px,3vw,45px);
+      line-height:1.02;
+      letter-spacing:-1.8px;
+      margin-bottom:22px;
+    }
+    .desc{
+      font-size:19px;
+      line-height:1.42;
+      opacity:.95;
+      max-width:92%;
+    }
+    .chips{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin:28px 0;
+    }
+    .chip{
+      padding:9px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.16);
+      border:1px solid rgba(255,255,255,.24);
+      font-size:13px;
+      font-weight:850;
+    }
+    .btn{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      width:100%;
+      text-decoration:none;
+      color:var(--ink);
+      background:#fff;
+      padding:20px 24px;
+      border-radius:22px;
+      font-weight:950;
+      font-size:18px;
+      box-shadow:0 16px 40px rgba(0,0,0,.12);
+    }
+    .btn span:last-child{font-size:24px;transition:transform .2s ease}
+    .btn:hover span:last-child{transform:translateX(5px)}
+    footer{
+      margin-top:34px;
+      display:flex;
+      justify-content:space-between;
+      gap:18px;
+      color:var(--muted);
+      font-size:14px;
+      flex-wrap:wrap;
+    }
+    @media(max-width:950px){
+      .grid{grid-template-columns:1fr}
+      .card{min-height:360px}
+      header{align-items:flex-start;flex-direction:column;margin-bottom:42px}
+      .badge{font-size:13px}
+    }
   </style>
 </head>
 <body>
-  <header class="topbar"><div class="wrap nav"><a class="brand" href="#home">GDB<span>Store</span></a><label class="search">🔎<input id="search" placeholder="Busque experiências, cursos, eventos e produtos" /></label><nav class="links"><a href="#instituicoes">Instituições</a><a href="#marketplaces">Marketplaces</a><a href="#eventos">Eventos</a><a href="#experiencias">Últimas experiências</a></nav><div class="actions"><button class="pillbtn" onclick="openModal('fav')">♡ Favoritos<span class="badge" id="favCount">0</span></button><button class="pillbtn" onclick="openModal('cart')">🛒 Carrinho<span class="badge" id="cartCount">0</span></button><button class="pillbtn" onclick="openModal('login')">Entrar</button></div></div></header>
+  <main class="wrap">
+    <header>
+      <div class="brand">GDB<span>Store</span></div>
+      <div class="badge">Portal de escolha dos e-commerces do Grupo Dom Bosco</div>
+    </header>
 
-  <main id="app"></main>
-  <footer class="footer"><div class="wrap"><b>GDB Store</b> — protótipo de navegação para apresentar a jornada ideal dos marketplaces Dom Bosco, UNDB e Pós-Graduação UNDB.</div></footer>
+    <section class="hero">
+      <div class="eyebrow">Grupo Dom Bosco</div>
+      <h1>Qual instituição você deseja acessar?</h1>
+      <p class="sub">Escolha abaixo para entrar na loja específica da instituição. Cada ambiente terá seus próprios produtos, categorias, eventos e experiências.</p>
+    </section>
 
-  <div class="modal" id="modal"><div class="box"><button class="close" onclick="closeModal()">Fechar</button><div id="modalContent"></div></div></div>
+    <section class="grid" aria-label="Escolha de instituição">
+      <article class="card dom">
+        <div>
+          <p class="label">Dom Bosco Exponencial</p>
+          <h2>Dom Bosco Exponencial</h2>
+          <p class="desc">Férias, experiências escolares, eventos, materiais, fardamento e produtos da rotina escolar.</p>
+          <div class="chips">
+            <span class="chip">Férias em Movimento</span>
+            <span class="chip">Sábado em Movimento</span>
+            <span class="chip">Ópera</span>
+            <span class="chip">LUPI</span>
+            <span class="chip">Material escolar</span>
+            <span class="chip">Fardamento</span>
+          </div>
+        </div>
+        <a class="btn" href="#" onclick="alert('Link do marketplace Dom Bosco Exponencial a definir.'); return false;"><span>Acessar Dom Bosco</span><span>→</span></a>
+      </article>
 
-<script>
-const state={cart:[],fav:[]};
-const products={
- db:[
-  ['Férias em Movimento','Dom Bosco Exponencial','Diárias, semanas e programação especial de férias.','A partir de R$ 120','Férias'],
-  ['Sábado em Movimento','Dom Bosco Exponencial','Vivência escolar, movimento, brincadeiras e experiências.','R$ 89','Eventos'],
-  ['Ópera Dom Bosco','Dom Bosco Exponencial','Ingresso/participação em apresentação cultural da escola.','Consultar','Eventos'],
-  ['LUPI','Dom Bosco Exponencial','Produto/experiência escolar vinculada ao ecossistema Dom Bosco.','Consultar','Produtos'],
-  ['Material escolar','Dom Bosco Exponencial','Kits e materiais oficiais para rotina escolar.','Consultar','Produtos escolares'],
-  ['Fardamento','Dom Bosco Exponencial','Uniformes e peças oficiais Dom Bosco.','Consultar','Produtos escolares']
- ],
- undb:[
-  ['Giro das Profissões','UNDB','Experiência presencial para conhecer cursos, laboratórios e mercado.','Gratuito','Experiências'],
-  ['Stet-up','UNDB','Projeto/experiência acadêmica para estudantes e comunidade.','Consultar','Projetos'],
-  ['Curso Livre: IA na Prática','UNDB','Curso rápido para desenvolver habilidades aplicadas.','R$ 199','Cursos livres'],
-  ['Oficina de Carreira','UNDB','Vivência prática sobre currículo, mercado e posicionamento.','R$ 49','Cursos livres'],
-  ['Workshop de Saúde','UNDB','Experiência prática em laboratórios e simulações.','R$ 79','Eventos'],
-  ['Projeto de Extensão','UNDB','Inscrição em projeto acadêmico avulso.','Consultar','Projetos']
- ],
- pos:[
-  ['Módulo Avulso de IA Estratégica','Pós-Graduação UNDB','Aula/módulo independente para profissionais.','R$ 249','Módulos'],
-  ['Curso Livre: Liderança','Pós-Graduação UNDB','Formação rápida para gestores e líderes.','R$ 199','Cursos livres'],
-  ['Imersão em Direito','Pós-Graduação UNDB','Experiência prática com professores especialistas.','R$ 299','Imersões'],
-  ['Módulo de Gestão de Pessoas','Pós-Graduação UNDB','Conteúdo executivo para carreira e liderança.','R$ 249','Módulos'],
-  ['Pós Experience','Pós-Graduação UNDB','Evento de relacionamento e experimentação da pós.','Gratuito','Eventos'],
-  ['Curso Livre: Comunicação Executiva','Pós-Graduação UNDB','Prática para apresentações, negociação e influência.','R$ 179','Cursos livres']
- ]
-};
-const marketInfo={
- db:{title:'Marketplace Dom Bosco Exponencial',subtitle:'Produtos escolares, experiências, férias, eventos e itens da rotina das famílias.',theme:'dbTheme',art:'DOM BOSCO',cats:['Todos','Férias','Eventos','Produtos escolares','Serviços'],button:'Comprar Férias em Movimento',photo:'dbp'},
- undb:{title:'Marketplace UNDB',subtitle:'Cursos livres, projetos, experiências acadêmicas e eventos de carreira.',theme:'undbTheme',art:'UNDB',cats:['Todos','Cursos livres','Experiências','Eventos','Projetos'],button:'Inscrever no Giro das Profissões',photo:'undbp'},
- pos:{title:'Marketplace Pós-Graduação UNDB',subtitle:'Cursos livres, módulos avulsos, imersões e formações executivas.',theme:'posTheme',art:'PÓS UNDB',cats:['Todos','Cursos livres','Módulos','Imersões','Eventos'],button:'Ver módulos disponíveis',photo:'posp'}
-};
-function money(p){return p.includes('R$')?p:p}
-function card(p,key){return `<article class="product"><div class="photo ${marketInfo[key].photo}">${p[0]}</div><div class="productBody"><div class="label">${p[1]} • ${p[4]}</div><h3>${p[0]}</h3><div class="meta">${p[2]}</div><div class="price">${money(p[3])}</div><div class="row"><button class="outline" onclick="fav('${p[0]}')">♡</button><button class="outline" onclick="details('${p[0]}','${p[1]}','${p[2]}','${p[3]}')">Detalhes</button><button class="buy" onclick="addCart('${p[0]}')">Comprar</button></div></div></article>`}
-function renderHome(){document.getElementById('app').innerHTML=`
-<section class="hero" id="home"><div class="wrap heroGrid"><div class="heroCard"><div class="kicker">Portal oficial de marketplaces</div><h1>Escolha qual loja do Grupo Dom Bosco você quer acessar.</h1><p>A GDB Store é a porta de entrada para os marketplaces da UNDB, Dom Bosco Exponencial e Pós-Graduação UNDB.</p><a class="cta alt" href="#instituicoes">Escolher marketplace →</a></div><div class="sideInfo"><div class="mini"><h3>Uma entrada. Três lojas.</h3><p>Cada instituição tem sua própria identidade, categorias, produtos, eventos e jornada de compra.</p></div><div class="mini"><h3>Feito para testar a frente visual.</h3><p>Favoritos, carrinho, login, produto, detalhes e navegação estão clicáveis para demonstração.</p></div></div></div></section>
-<section class="section" id="instituicoes"><div class="wrap"><div class="titleRow"><div><h2>Qual marketplace você deseja acessar?</h2><p>Selecione a instituição para entrar no e-commerce específico dela.</p></div></div><div class="gateway">
-<a class="gate db" href="#loja-dom-bosco"><div><div class="tag">Dom Bosco Exponencial</div><h3>Marketplace Dom Bosco</h3><p>Férias, experiências escolares, eventos, materiais, fardamento e produtos da rotina escolar.</p></div><button class="cta">Entrar na loja →</button></a>
-<a class="gate undb" href="#loja-undb"><div><div class="tag">Centro Universitário</div><h3>Marketplace UNDB</h3><p>Cursos livres, projetos, experiências acadêmicas, eventos e vivências de carreira.</p></div><button class="cta">Entrar na loja →</button></a>
-<a class="gate pos" href="#loja-pos"><div><div class="tag">Pós-Graduação UNDB</div><h3>Marketplace Pós</h3><p>Cursos livres, módulos avulsos, imersões, aulas executivas e formações profissionais.</p></div><button class="cta">Entrar na loja →</button></a>
-</div></div></section>
-<section class="section" id="marketplaces"><div class="wrap"><div class="titleRow"><div><h2>Prévia dos marketplaces</h2><p>Cada card abaixo leva para uma loja separada por instituição.</p></div></div><div class="grid">${card(products.db[0],'db')}${card(products.undb[0],'undb')}${card(products.pos[0],'pos')}${card(products.db[4],'db')}</div></div></section>
-<section class="section" id="eventos"><div class="wrap"><div class="titleRow"><div><h2>Próximos eventos</h2><p>Calendário visual para eventos, experiências e produtos com data.</p></div></div><div class="events"><div class="event"><span class="date">Julho</span><h3>Férias em Movimento</h3><p>Dom Bosco Exponencial</p></div><div class="event"><span class="date">Agosto</span><h3>Giro das Profissões</h3><p>UNDB</p></div><div class="event"><span class="date">Setembro</span><h3>Pós Experience</h3><p>Pós-Graduação UNDB</p></div></div></div></section>
-<section class="section" id="experiencias"><div class="wrap"><div class="titleRow"><div><h2>Últimas experiências</h2><p>Sim, vale muito usar fotos dos últimos eventos. Isso funciona como prova social e ajuda na conversão.</p></div></div><div class="gallery"><div class="memory"><span>Férias em Movimento 2025</span></div><div class="memory"><span>Giro das Profissões UNDB</span></div><div class="memory"><span>Sleep Over Dom Bosco</span></div><div class="memory"><span>Pós Experience</span></div></div></div></section>`}
-function renderMarket(key){const m=marketInfo[key];document.getElementById('app').innerHTML=`<section class="market"><div class="wrap"><a class="outline" href="#home">← Voltar para GDB Store</a><div class="marketHero ${m.theme}" style="margin-top:18px"><div><div class="kicker" style="color:white">${m.art}</div><h1>${m.title}</h1><p>${m.subtitle}</p><button class="cta" onclick="addCart('${products[key][0][0]}')">${m.button}</button></div><div class="mhArt">${m.art}</div></div><div class="chips">${m.cats.map((c,i)=>`<button class="chip ${i==0?'active':''}" onclick="filterCat('${key}','${c}',this)">${c}</button>`).join('')}</div><div class="carousel"><div class="slide ${m.theme}"><h2>${products[key][0][0]}</h2><p>${products[key][0][2]}</p><button class="cta" onclick="details('${products[key][0][0]}','${products[key][0][1]}','${products[key][0][2]}','${products[key][0][3]}')">Ver detalhes →</button></div><div class="slideSmall"><div class="smallCard"><b>Mais procurados</b><p>Produtos com maior intenção de compra e inscrição.</p></div><div class="smallCard"><b>Fotos reais dos eventos</b><p>Substituir os blocos por fotos oficiais quando forem aprovadas.</p></div></div></div><div class="titleRow"><div><h2>Produtos da loja</h2><p>Cards com uma foto por produto, preço, favorito, detalhes e compra.</p></div></div><div class="grid" id="plist">${products[key].map(p=>card(p,key)).join('')}</div></div></section>`}
-function filterCat(key,cat,el){document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));el.classList.add('active');const arr=cat==='Todos'?products[key]:products[key].filter(p=>p[4]===cat);document.getElementById('plist').innerHTML=arr.map(p=>card(p,key)).join('')||'<p>Nenhum produto nessa categoria ainda.</p>'}
-function route(){const h=location.hash;if(h==='#loja-dom-bosco')renderMarket('db');else if(h==='#loja-undb')renderMarket('undb');else if(h==='#loja-pos')renderMarket('pos');else renderHome()}
-function addCart(name){state.cart.push(name);document.getElementById('cartCount').textContent=state.cart.length;openModal('cart')}
-function fav(name){if(!state.fav.includes(name))state.fav.push(name);document.getElementById('favCount').textContent=state.fav.length;openModal('fav')}
-function details(n,i,d,p){openModal('details',`<h2>${n}</h2><p><b>${i}</b></p><p>${d}</p><p><b>Valor:</b> ${p}</p><button class="buy" onclick="addCart('${n}')">Adicionar ao carrinho</button>`)}
-function openModal(type,html){const m=document.getElementById('modal'),c=document.getElementById('modalContent');if(html)c.innerHTML=html;else if(type==='cart')c.innerHTML=`<h2>Carrinho</h2>${state.cart.length?state.cart.map(x=>`<div class="cartItem"><span>${x}</span><b>1 un.</b></div>`).join('')+'<p><button class="buy">Ir para checkout visual</button></p>':'<p>Seu carrinho ainda está vazio.</p>'}`;else if(type==='fav')c.innerHTML=`<h2>Favoritos</h2>${state.fav.length?state.fav.map(x=>`<div class="cartItem"><span>${x}</span><button class="outline" onclick="addCart('${x}')">Comprar</button></div>`).join(''):'<p>Nenhum favorito ainda.</p>'}`;else c.innerHTML=`<h2>Entrar</h2><p>Área visual de login para simular acesso do cliente.</p><input style="width:100%;padding:14px;border:1px solid #eadcf0;border-radius:14px;margin:8px 0" placeholder="E-mail"><input style="width:100%;padding:14px;border:1px solid #eadcf0;border-radius:14px;margin:8px 0" placeholder="Senha"><button class="buy">Entrar</button>`;m.classList.add('open')}
-function closeModal(){document.getElementById('modal').classList.remove('open')}
-window.addEventListener('hashchange',route);route();
-</script>
+      <article class="card undb">
+        <div>
+          <p class="label">Centro Universitário</p>
+          <h2>UNDB</h2>
+          <p class="desc">Cursos livres, projetos, experiências acadêmicas, eventos e vivências de carreira.</p>
+          <div class="chips">
+            <span class="chip">Cursos livres</span>
+            <span class="chip">Stet-up</span>
+            <span class="chip">Giro das Profissões</span>
+            <span class="chip">Experiências acadêmicas</span>
+          </div>
+        </div>
+        <a class="btn" href="https://rafaellagama59-ship-it.github.io/gdb-marketplace-pr-totipo-/#instituicoes"><span>Acessar UNDB</span><span>→</span></a>
+      </article>
+
+      <article class="card pos">
+        <div>
+          <p class="label">Pós-Graduação UNDB</p>
+          <h2>Pós-Graduação UNDB</h2>
+          <p class="desc">Cursos livres, módulos avulsos, imersões, aulas executivas e formações profissionais.</p>
+          <div class="chips">
+            <span class="chip">Cursos livres</span>
+            <span class="chip">Módulos</span>
+            <span class="chip">Imersões</span>
+            <span class="chip">Aulas executivas</span>
+          </div>
+        </div>
+        <a class="btn" href="#" onclick="alert('Link do marketplace Pós-Graduação UNDB a definir.'); return false;"><span>Acessar Pós-Graduação</span><span>→</span></a>
+      </article>
+    </section>
+
+    <footer>
+      <span>Protótipo de porta de entrada — GDB Store</span>
+      <span>Os botões podem ser conectados aos links finais de cada marketplace.</span>
+    </footer>
+  </main>
 </body>
 </html>

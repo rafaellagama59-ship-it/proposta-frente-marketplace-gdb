@@ -1,16 +1,19 @@
-# GDB Store — Portal de Marketplaces
+# GDB Store — Hub de entrada
 
-Protótipo visual da jornada correta:
+Página inicial simples para escolha da instituição antes de acessar o marketplace específico.
 
-1. Porta de entrada: **GDB Store**
-2. Escolha da instituição:
+## Jornada
+
+1. Usuário acessa a GDB Store.
+2. Escolhe uma instituição:
    - Dom Bosco Exponencial
    - UNDB
    - Pós-Graduação UNDB
-3. Cada instituição abre seu próprio marketplace/e-commerce com identidade, categorias e produtos.
+3. É direcionado para o marketplace/e-commerce específico da instituição.
 
-Arquivos necessários para GitHub Pages:
+## Arquivos
+
 - `index.html`
 - `README.md`
 
-Não precisa de pasta assets, app.js ou style.css. Está tudo embutido no index.html.
+Todo o CSS está embutido no `index.html`.
