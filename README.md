@@ -1,14 +1,12 @@
-# GDB Store — Protótipo visual final
+# GDB Store — Portal + Marketplaces Separados
 
-Arquitetura:
+Estrutura correta:
 
-1. Porta de entrada GDB Store.
-2. Escolha da instituição: Dom Bosco Exponencial, UNDB ou Pós-Graduação UNDB.
-3. Cada instituição abre uma loja/e-commerce própria, com identidade, categorias, produtos, favoritos, carrinho, login, eventos e últimas experiências.
+- `index.html`: porta de entrada GDB Store
+- `dom-bosco.html`: loja Dom Bosco Exponencial
+- `undb.html`: loja UNDB
+- `pos.html`: loja Pós-Graduação UNDB
+- `styles.css`: visual compartilhado
+- `app.js`: interações visuais de favoritos, carrinho, login e detalhes
 
-Arquivos para GitHub Pages:
-
-- index.html
-- README.md
-
-Tudo está embutido no index.html.
+Para GitHub Pages, suba todos os arquivos na raiz do repositório.
